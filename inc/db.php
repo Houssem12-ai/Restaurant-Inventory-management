@@ -19,4 +19,6 @@ try {
     exit();
 } //throw =< will stoop the entire execution if there is an error 
 
+require 'crud.php';
+$crud = new crud($pdo);
 ?>

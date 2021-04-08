@@ -1,28 +1,19 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);
+?>
+
+<?php
 require("inc/db.php");
 $id = $_GET['id'] ? intval($_GET["id"]) : 0; // when is this condition required ?
 
-try {
-    $sql = "SELECT * FROM products WHERE id = :id LIMIT 1";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(":id", $id, PDO::PARAM_INT); // this parameter ?
-    $stmt->execute(); //revising sql injection
-} catch (Exception $e) {
-    echo "Error" . $e->getMessage();
-    exit();
-}
 
-if (!$stmt->rowCount()) {
-    header("location : index.php"); //redirecting i guess ?
-    exit();
-}
+$product = $crud->getproduct($id);
 
-$product = $stmt->fetch();
+
 
 ?>
-
-
-
 
 
 <?php include("inc/header.php") ?>

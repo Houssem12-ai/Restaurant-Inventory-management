@@ -2,22 +2,7 @@
 require("inc/db.php");
 $id = $_GET['id'] ? intval($_GET["id"]) : 0; // when is this condition required ?
 
-try {
-    $sql = "SELECT * FROM products WHERE id = :id LIMIT 1";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(":id", $id, PDO::PARAM_INT); // this parameter ?
-    $stmt->execute(); //revising sql injection
-} catch (Exception $e) {
-    echo "Error" . $e->getMessage();
-    exit();
-}
-
-if (!$stmt->rowCount()) {
-    header("location : index.php"); //??????
-    exit();
-}
-
-$product = $stmt->fetch();
+$product = $crud->extract($id);
 
 ?>
 
