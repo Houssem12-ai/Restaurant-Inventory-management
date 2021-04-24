@@ -1,71 +1,76 @@
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', TRUE);
-ini_set('display_startup_errors', TRUE);
-?>
+<?php include('./includes/header.php') ?>
 
-<?php
-include("inc/header.php");
-require("inc/db.php");
 
-try {
-    $sql = "SELECT * FROM products";
-    $result = $pdo->query($sql); // this the first method of doing it
-} catch (Exception $e) {
-    echo "Error " . $e->getMessage();
-}
-?>
-<div class="container">
-    <!-- Table Product -->
-    <div class="card border-danger">
-        <div class="card-header bg-danger text-white">
-            <strong><i class="fa fa-database"></i> Products</strong>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <h5 class="card-title float-left">Table Products</h5>
-                    <a href="create.php" class="btn btn-success float-right mb-3"><i class="fa fa-plus"></i> Add New</a>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center">expense income monitor</h1>
+            <hr>
+            <div class="col-md-12">
+                <div id="results">
+
                 </div>
             </div>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Qty</th>
-                        <th style="width: 20%;">Actions</th>
-                    </tr>
-                </thead>
 
-                <tbody>
-                    <?php if ($result->rowCount() > 0) : ?>
-                        <?php foreach ($result as $product) : ?>
-                            <tr>
-                                <td><?= $product["barcode"] ?></td>
-                                <td><?= $product["name"] ?></td>
-                                <td><?= number_format($product["price"], 2) ?></td>
-                                <td><?= $product["qty"] ?></td>
-                                <td><?= $product["barcode"] ?></td>
-                                <td>
-                                    <a href="show.php?id=<?= $product["id"] ?>" class="btn btn-sm btn-light"><i class="fa fa-th-list"></i></a>
-                                    <a href="edit.php?id=<?= $product["id"] ?>" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                                    <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        <?php endforeach ?>
-                    <?php endif ?>
-                </tbody>
-            </table>
+            <div class="col-md-6">
+                <div class="income-div">
+                    <h3 class="text-center">Income Form</h3>
+
+                    <form method="POST" id="incomeForm">
+                        <div class="form-group">
+                            <label for="income-source">Income source</label>
+                            <input required type="text" name="income-source" id="income-source" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="income-amount">Amount</label>
+                            <input required type="number" name="income-amount" id="income-amount" class="form-control">
+                            <input type="hidden" name="currency" id="currency" value="$">
+                        </div>
+                        <button type="submit" class="btn btn-success" id="submitbtn">submit income</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="expense-div">
+                    <h3 class="text-center">Expenses Form</h3>
+
+                    <form id="expensesForm" method="post">
+                        <div class="form-group">
+                            <label for="expense-source">Expenses Source</label>
+                            <input required type="text" name="expense-source" id="expense-source" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <input required type="number" name="expense-amount" id="expense-amount" class="form-control">
+                            <input type="hidden" name="currency" id="currency" value="$">
+                        </div>
+
+                        <button type="submit" class="btn btn-danger" id="submitbtn">total Expense</button>
+                    </form>
+                </div><!-- backgrcol to this div why then colored the hole container  -->
+            </div>
         </div>
     </div>
-    <!-- End Table Product -->
-    <br>
-</div><!-- /.container -->
 
-<?php include("inc/footer.php") ?>
-<!-- 
-   // <php var_dump($result) ?>
-    <-- print_r =>humain readable -->
-<!-- what si var_dump  -->
+</body>
+
+<script>
+    $(document).ready(function() {
+        $("#incomeForm").submit(function(event) {
+            event.preventDefault()
+            $.ajax({
+                url: "insert.php",
+                method: "POST",
+                data: $(this).serialize(),
+                success: function(response) {
+                    $("#results").html(response);
+                    $("#incomeForm")[0].reset(); //this is working
+                }
+            })
+        })
+    })
+</script>
+
+<?php include('./includes/footer.php') ?>
