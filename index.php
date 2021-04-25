@@ -4,7 +4,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <h1 class="text-center">expense income monitor</h1>
+            <h1 class="text-center">Expenses income monitor</h1>
             <hr>
             <div class="col-md-12">
                 <div id="results">
@@ -16,7 +16,7 @@
                 <div class="income-div">
                     <h3 class="text-center">Income Form</h3>
 
-                    <form method="POST" id="incomeForm">
+                    <form id="incomeForm" method="POST">
                         <div class="form-group">
                             <label for="income-source">Income source</label>
                             <input required type="text" name="income-source" id="income-source" class="form-control">
@@ -32,22 +32,22 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="expense-div">
+                <div class="Expenses-div">
                     <h3 class="text-center">Expenses Form</h3>
 
-                    <form id="expensesForm" method="post">
+                    <form id="ExpensesForm" method="POST">
                         <div class="form-group">
-                            <label for="expense-source">Expenses Source</label>
-                            <input required type="text" name="expense-source" id="expense-source" class="form-control">
+                            <label for="expenses-source">expenses Source</label>
+                            <input required type="text" name="expenses-source" id="expenses-source" class="form-control">
                         </div>
 
                         <div class="form-group">
-                            <label for="amount">Amount</label>
-                            <input required type="number" name="expense-amount" id="expense-amount" class="form-control">
+                            <label for="expenses-amount">Amount</label>
+                            <input required type="number" name="expenses-amount" id="expenses-amount" class="form-control">
                             <input type="hidden" name="currency" id="currency" value="$">
                         </div>
 
-                        <button type="submit" class="btn btn-danger" id="submitbtn">total Expense</button>
+                        <button type="submit" class="btn btn-danger" id="submitbtn">total expenses</button>
                     </form>
                 </div><!-- backgrcol to this div why then colored the hole container  -->
             </div>
@@ -59,7 +59,7 @@
 <script>
     $(document).ready(function() {
         $("#incomeForm").submit(function(event) {
-            event.preventDefault()
+            event.preventDefault();
             $.ajax({
                 url: "insert.php",
                 method: "POST",
@@ -67,10 +67,56 @@
                 success: function(response) {
                     $("#results").html(response);
                     $("#incomeForm")[0].reset(); //this is working
+                    incomeBalance();
+                }
+            })
+        })
+
+        $("#ExpensesForm").submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: "insert.php",
+                method: "POST",
+                data: $(this).serialize(), //???
+                success: function(response) {
+                    $("#results").html(response);
+                    $("#ExpensesForm")[0].reset(); //this is working now
+                    incomeBalance();
                 }
             })
         })
     })
+
+    function incomeBalance() {
+        var income_balance = "income_balance";
+        $.ajax({
+            url: "income_balance_update.php",
+            method: "post",
+            data: {
+                income_balance: income_balance
+            },
+            success: function() {
+                //alert("balance updated hey");
+                displayData();
+            }
+        })
+    }
+
+    function displayData() {
+        var displayData = "displayData";
+        $.ajax({
+            url: "fetch-data.php",
+            method: "post",
+            data: {
+                displayData: displayData
+            },
+            success: function() {
+                $("results").html(data);
+
+            }
+        })
+    }
+    displayData();
 </script>
 
 <?php include('./includes/footer.php') ?>

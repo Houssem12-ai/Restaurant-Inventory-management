@@ -20,6 +20,9 @@ try {
 
 
 require './models/income.php';
+require './models/expense.php'; // Here is the is prob
+
 $conn = new income($pdo);
+$conn2 = new expense($pdo);
 
 ?>

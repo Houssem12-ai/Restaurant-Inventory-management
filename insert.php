@@ -11,10 +11,38 @@ if (isset($_POST['income-source'])) {
         echo "<p class='text-danger'>Only digit are allowed please</p>";
         exit();
     }
-    $conn->insert_inc($income_source, $income_amount, $currency);
+    $kind = "income";
 
-    $somme = $conn->get_inc();
+    $conn->insert_inc($income_source, $income_amount, $currency, "income");
+
+    $somme = $conn->get_inc("income");
+    $conn->set_inc("income", $somme);
     echo $somme;
+} else {
+    echo "there was an error";
+}
+
+//EXPENSES 
+
+if (isset($_POST['expenses-source'])) {
+
+    $expenses_source = $_POST['expenses-source'];
+    $expenses_amount =  $_POST['expenses-amount'];
+    $currency =  $_POST['currency'];
+
+    if (!preg_match("/^[0-9]*$/", $expenses_amount)) {
+        //this is in case u wanna make a specefic message from the db u can make it that way
+        echo "<p class='text-danger'>Only digit are allowed please</p>";
+        exit();
+    }
+    $conn2->insert_exp($expenses_source, $expenses_amount, $currency, 'expense');
+
+    // why declaring this variable doesn't work ?? $kind2 = "expense";
+
+    $Xsomme = $conn2->get_exp("expense");
+    echo $Xsomme;
+    $conn2->set_exp("expense", $Xsomme);
+    //echo $Xsomme;
 } else {
     echo "there was an error";
 }
