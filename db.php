@@ -22,4 +22,6 @@ require './models/income.php';
 $conn = new income($pdo);
 require './models/expense.php';
 $conn2 = new expense($pdo);
+require './models/both.php';
+$conn3 = new both($pdo);
 ?>

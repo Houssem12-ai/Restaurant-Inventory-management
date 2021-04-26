@@ -91,32 +91,32 @@
         var income_balance = "income_balance";
         $.ajax({
             url: "income_balance_update.php",
-            method: "post",
+            method: "POST",
             data: {
                 income_balance: income_balance
             },
             success: function() {
-                alert("balance updated hey");
-                // displayData();
+                //alert("balance updated hey");
+                displayData();
             }
         })
     }
 
-    /*
-        function displayData() {
-            var displayData = "displayData";
-            $.ajax({
-                url: "fetch-data.php",
-                method: "POST",
-                data: {
-                    displayData: displayData
-                },
-                success: function() {
-                    $("results").html(data);
-                }
-            })
-        } */
-    // displayData();
+
+    function displayData() {
+        var displayData = "displayData";
+        $.ajax({
+            url: "fetch_data.php",
+            method: "POST",
+            data: {
+                displayData: displayData
+            },
+            success: function(data) {
+                $("#results").html(data);
+            }
+        })
+    }
+    displayData();
 </script>
 
 <?php include('./includes/footer.php') ?>
