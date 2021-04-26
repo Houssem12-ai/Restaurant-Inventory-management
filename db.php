@@ -12,17 +12,14 @@ try {
     $pdo = new PDO($dsn, $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); //????
-    //echo "connected actually ";
+    echo "connected actually ";
 } catch (PDOException $e) {/* mandatory to put inside */
     echo "error " . $e->getMessage(); //??? less than the other method 
     exit();
 } //throw =< will stoop the entire execution if there is an error 
 
-
 require './models/income.php';
-require './models/expense.php'; // Here is the is prob
-
 $conn = new income($pdo);
+require './models/expense.php';
 $conn2 = new expense($pdo);
-
 ?>

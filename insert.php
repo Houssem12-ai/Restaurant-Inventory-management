@@ -1,3 +1,4 @@
+
 <?php
 include('db.php');
 
@@ -11,13 +12,15 @@ if (isset($_POST['income-source'])) {
         echo "<p class='text-danger'>Only digit are allowed please</p>";
         exit();
     }
-    $kind = "income";
+    //$kind = "income";
 
     $conn->insert_inc($income_source, $income_amount, $currency, "income");
 
     $somme = $conn->get_inc("income");
     $conn->set_inc("income", $somme);
-    echo $somme;
+    //echo $kind;
+    // echo $kind;
+
 } else {
     echo "there was an error";
 }
@@ -40,9 +43,12 @@ if (isset($_POST['expenses-source'])) {
     // why declaring this variable doesn't work ?? $kind2 = "expense";
 
     $Xsomme = $conn2->get_exp("expense");
-    echo $Xsomme;
+    //  echo $Xsomme;
     $conn2->set_exp("expense", $Xsomme);
-    //echo $Xsomme;
+    //*/
+
+    //echo "salem2";
 } else {
     echo "there was an error";
 }
+?>

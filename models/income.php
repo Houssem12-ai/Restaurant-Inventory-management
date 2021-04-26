@@ -11,8 +11,10 @@ class income
     public function insert_inc($name, $amount, $currency, $kind)
     {
         try {
-            $sql = "INSERT INTO " .  "$kind" . "_tbl(" . $kind . "_name," .  $kind . "_amount, currency)
-        VALUES(:name,:amount,:currency)";
+            $sql = "INSERT INTO " .  $kind . "_tbl ( " . $kind . "_name, " .  $kind . "_amount, currency) 
+            VALUES(:name,:amount,:currency)";
+            $sql = "INSERT INTO income_tbl ( income_name, income_amount, currency)
+        VALUES(:income_name,:income_amount,:currency)";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":amount", $amount);
@@ -28,7 +30,7 @@ class income
     public function get_inc($kind)
     {
         try {
-            $sql = "SELECT SUM(" . "$kind" . "_amount) AS total_amount FROM " .  "$kind" . "_tbl";
+            $sql = "SELECT SUM(" . $kind . "_amount) AS total_amount FROM " .  $kind . "_tbl";
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetch();
@@ -39,11 +41,10 @@ class income
         }
     }
 
-
     public function set_inc($kind, $amount)
     {
         try {
-            $sql = "UPDATE " . "$kind" . "_tbl SET total_" . "$kind" . " = :amount";
+            $sql = "UPDATE " . $kind . "_tbl SET total_" . $kind . " = :amount";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(":amount", $amount);
             $stmt->execute();
