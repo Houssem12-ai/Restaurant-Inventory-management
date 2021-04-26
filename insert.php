@@ -12,6 +12,7 @@ if (isset($_POST['income-source'])) {
         echo "<p class='text-danger'>Only digit are allowed please</p>";
         exit();
     }
+
     //$kind = "income";
 
     $conn->insert_inc($income_source, $income_amount, $currency, "income");

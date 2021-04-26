@@ -13,8 +13,7 @@ class income
         try {
             $sql = "INSERT INTO " .  $kind . "_tbl ( " . $kind . "_name, " .  $kind . "_amount, currency) 
             VALUES(:name,:amount,:currency)";
-            $sql = "INSERT INTO income_tbl ( income_name, income_amount, currency)
-        VALUES(:income_name,:income_amount,:currency)";
+
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":amount", $amount);

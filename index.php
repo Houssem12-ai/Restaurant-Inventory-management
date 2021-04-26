@@ -67,7 +67,7 @@
                 success: function(response) {
                     $("#results").html(response);
                     $("#incomeForm")[0].reset(); //this is working
-                    //incomeBalance();
+                    incomeBalance();
                 }
             })
         })
@@ -81,13 +81,13 @@
                 success: function(response) {
                     $("#results").html(response);
                     $("#ExpensesForm")[0].reset(); //this is working now
-                    // incomeBalance();
+                    incomeBalance();
                 }
             })
         })
     })
 
-    /* function incomeBalance() {
+    function incomeBalance() {
         var income_balance = "income_balance";
         $.ajax({
             url: "income_balance_update.php",
@@ -102,19 +102,20 @@
         })
     }
 
-    function displayData() {
-        var displayData = "displayData";
-        $.ajax({
-            url: "fetch-data.php",
-            method: "POST",
-            data: {
-                displayData: displayData
-            },
-            success: function() {
-                $("results").html(data);
-            }
-        })
-    } */
+    /*
+        function displayData() {
+            var displayData = "displayData";
+            $.ajax({
+                url: "fetch-data.php",
+                method: "POST",
+                data: {
+                    displayData: displayData
+                },
+                success: function() {
+                    $("results").html(data);
+                }
+            })
+        } */
     // displayData();
 </script>
 
