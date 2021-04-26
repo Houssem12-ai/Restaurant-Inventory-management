@@ -11,8 +11,7 @@ class both
     public function get_all($sub)
     {
         $sql = "SELECT * FROM " . $sub . "_tbl";
-        $result = $this->db->query($sql);
-        $res = $result->fetch_row();
+        $res = $this->db->query($sql);
         return $res;
     }
 }

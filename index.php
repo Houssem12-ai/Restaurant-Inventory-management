@@ -117,6 +117,24 @@
         })
     }
     displayData();
+    $(document).on("click", ".editBtn", function() {
+        var editBtnId = $(this).attr("id");
+        $.ajax({
+            url: "edit_income.php",
+            method: "POST",
+            DataType: "json",
+            data: {
+                editBtnId: editBtnId
+            },
+            success: function(data) {
+                $("#income_name").val(data.income_name);
+                $("#income_amount").val(data.income_amount);
+
+            }
+
+        })
+        alert(editBtnId)
+    })
 </script>
 
 <?php include('./includes/footer.php') ?>
