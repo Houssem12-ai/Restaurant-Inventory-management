@@ -92,14 +92,26 @@ class income
     }
 
 
-    public function update_inc($kind, $income_id, $income_name, $income_amount)
+    public function update_inc($income_id, $income_name, $income_amount)
     {
-        try {
-            $sql = "UPDATE '$kind'_tbl SET '$kind'_name = :income_name, '$kind'_amount = :income_amount WHERE id = ':id' ";
+        try { // avoid using a generic variable and nest it within ' '
+            $sql = "UPDATE income_tbl SET income_name = :income_name, income_amount = :income_amount WHERE id = :id";
             $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":id", $income_id);
             $stmt->bindParam(":income_name", $income_name);
             $stmt->bindParam(":income_amount", $income_amount);
-            $stmt->bindParam(":id", $income_id);
+            $stmt->execute();
+        } catch (Exception $e) {
+            echo "Error" . $e->getMessage();
+            exit();
+        }
+    }
+    public function delete_inc($id)
+    {
+        try {
+            $sql = "DELETE FROM income_tbl WHERE id = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":id", $id);
             $stmt->execute();
         } catch (Exception $e) {
             echo "Error" . $e->getMessage();

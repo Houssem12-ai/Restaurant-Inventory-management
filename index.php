@@ -168,6 +168,22 @@
             })
         })
     });
+
+
+    $(document).on("click", ".deleteBtn", function() {
+        var deleteBtnId = $(this).attr("id");
+        //alert("r u suuuuuuuure");
+        $.ajax({
+            url: "delete.php",
+            method: "POST",
+            data: {
+                deleteBtnId
+            },
+            success: function() {
+                displayData();
+            }
+        })
+    })
 </script>
 
 <?php include('./includes/footer.php') ?>
