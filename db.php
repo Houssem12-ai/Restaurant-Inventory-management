@@ -1,4 +1,3 @@
-<html lang="en">
 <?php
 $host = 'localhost';
 $db = 'expense';
@@ -24,4 +23,3 @@ require './models/expense.php';
 $conn2 = new expense($pdo);
 require './models/both.php';
 $conn3 = new both($pdo);
-?>

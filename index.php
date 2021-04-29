@@ -19,16 +19,20 @@
                     <form id="incomeForm" method="POST">
                         <div class="form-group">
                             <label for="income-source">Income source</label>
-                            <input required type="text" name="income-source" id="income-source" class="form-control">
+                            <input required type="text" id="income-source" name="income-source" class="form-control">
+                            <input type="hidden" id="income_id" name="income_id">
                         </div>
 
                         <div class="form-group">
                             <label for="income-amount">Amount</label>
                             <input required type="number" name="income-amount" id="income-amount" class="form-control">
                             <input type="hidden" name="currency" id="currency" value="$">
-                        </div>
+
+                        </div><!-- the displya non property add it later -->
                         <button type="submit" class="btn btn-success" id="submitbtn">submit income</button>
                     </form>
+                    <button type="submit" style="display : none" class="btn btn-primary" id="updateBtn">Update</button>
+
                 </div>
             </div>
             <div class="col-md-6">
@@ -99,6 +103,7 @@
                 //alert("balance updated hey");
                 displayData();
             }
+
         })
     }
 
@@ -117,6 +122,7 @@
         })
     }
     displayData();
+
     $(document).on("click", ".editBtn", function() {
         var editBtnId = $(this).attr("id");
         $.ajax({
@@ -127,14 +133,41 @@
                 editBtnId: editBtnId
             },
             success: function(data) {
-                $("#income_name").val(data.income_name);
-                $("#income_amount").val(data.income_amount);
-
+                var json = JSON.parse(data);
+                //console.log(json.id);
+                $("#income_id").val(json.id);
+                $("#income-source").val(json.income_name);
+                $("#income-amount").val(json.income_amount);
+                $("#updateBtn").show();
+                $("#submitbtn").css("display", "none");
             }
-
         })
-        alert(editBtnId)
     })
+    $(function() {
+        $("#updateBtn").click(function() {
+            var income_id = $("#income_id").val();
+            var income_name = $("#income-source").val();
+            var income_amount = $("#income-amount").val();
+            if (income_name == "" || income_amount == "") {
+                alert("those fields shouldn't be empty");
+                return false;
+            }
+            $.ajax({
+                url: "post_edit_income.php",
+                method: "POST",
+                data: {
+                    income_id: income_id,
+                    income_name: income_name,
+                    income_amount: income_amount
+                },
+                success: function() {
+                    displayData();
+                    $("#updateBtn").css("display", "none");
+                    $("#submitbtn").show();
+                }
+            })
+        })
+    });
 </script>
 
 <?php include('./includes/footer.php') ?>

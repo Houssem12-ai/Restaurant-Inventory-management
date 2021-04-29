@@ -78,4 +78,32 @@ class income
         $stmt->bindParam(':income_balance', $res);
         $stmt->execute();
     }
+
+    public function get_spec_income($val)
+    {
+        $sql = "SELECT * FROM income_tbl WHERE id = '$val'";
+        /*  
+        return $result; */
+        /* $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $result = */
+        $result = $this->db->query($sql);
+        return $result;
+    }
+
+
+    public function update_inc($kind, $income_id, $income_name, $income_amount)
+    {
+        try {
+            $sql = "UPDATE '$kind'_tbl SET '$kind'_name = :income_name, '$kind'_amount = :income_amount WHERE id = ':id' ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":income_name", $income_name);
+            $stmt->bindParam(":income_amount", $income_amount);
+            $stmt->bindParam(":id", $income_id);
+            $stmt->execute();
+        } catch (Exception $e) {
+            echo "Error" . $e->getMessage();
+            exit();
+        }
+    }
 }

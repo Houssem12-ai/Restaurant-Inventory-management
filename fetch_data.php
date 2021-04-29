@@ -22,7 +22,13 @@ if (isset($_POST['displayData'])) {
 <?php foreach ($income as $key) : ?>
     <div class="all_incomes">
         <ul>
-            <li><?php echo $key['income_name'] ?><span class="float-right"><?php echo $key['currency'] ?><?php echo $key['income_amount'] ?><button class="btn btn-primary btn-xs editBtn" type="button" id="<?php echo $key['id'] ?>">Edit</button><button class="btn btn-danger btn-xs editBtn" id="<?php echo $key['id'] ?>">&times;</button></span>
+            <li><?php echo $key['income_name'] ?>
+                <span class="float-right">
+                    <?php echo $key['currency'] ?>
+                    <?php echo $key['income_amount'] ?>
+                    <button class="btn btn-primary btn-xs editBtn" type="button" id="<?php echo $key['id'] ?>">Edit</button>
+                    <button class="btn btn-danger btn-xs deleteBtn" id="<?php echo $key['id'] ?>">&times;</button>
+                </span>
             </li>
         </ul>
     </div>
