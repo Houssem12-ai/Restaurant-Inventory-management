@@ -43,7 +43,7 @@ $product = $crud->getproduct($id);
                     <input type="hidden" name="id" id="id" value="<?= $product["id"] ?>">
                     <div class="form-group col-md-6">
                         <label for="barcode" class="col-form-label">Barcode</label>
-                        <input type="text" class="form-control" id="barcode" name="barcode" value="<?= $product['barcode'] ?>" value="<?= $product['barcode '] ?>" placeholder="Barcode" required>
+                        <input type="number" class="form-control" id="barcode" name="barcode" value="<?= $product['barcode'] ?>" placeholder="Barcode" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="name" class="col-form-label">Name</label>
